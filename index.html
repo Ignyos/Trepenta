@@ -17,6 +17,7 @@
                 <li><a href="#home">Home</a></li>
                 <li><a href="#core-rules">Core Rules</a></li>
                 <li><a href="#house-rules">House Rules</a></li>
+                <li id="nav-standard-deck" style="display: none;"><a href="#standard-deck">Standard Deck</a></li>
                 <li><a href="#about">About</a></li>
             </ul>
         </div>
@@ -24,7 +25,7 @@
 
     <header class="hero" id="home">
         <div class="container">
-            <h1>Welcome to Trepenta</h1>
+            <h1>Trepenta</h1>
             <p class="subtitle">A strategic card game with endless possibilities</p>
             <a href="#core-rules" class="btn btn-primary">Learn to Play</a>
         </div>
@@ -119,7 +120,7 @@
                     <li>Select the appropriate number of suits based on player count (see table above)</li>
                     <li>Players agree on who will deal first. After each round, the dealer rotates to the left</li>
                     <li>The dealer shuffles and deals each player two separate piles of 5 cards each</li>
-                    <li>Flip one card face-up to start the discard pile</li>
+                    <li>Place one card face-up to start the discard pile</li>
                     <li>Each player chooses one pile to place face-down in a line (left to right) as their <strong>field</strong>, and keeps the other pile as their <strong>hand</strong></li>
                     <li>Each player rolls their die and places it to the left of their field cards</li>
                 </ol>
@@ -226,21 +227,133 @@
             <h2>House Rules</h2>
             <p class="section-intro">Choose any combination of these optional rules to customize your game experience. All house rules are compatible with each other.</p>
             
-            <div class="house-rules-grid">
-                <div class="card">
-                    <h3>House Rule 1</h3>
-                    <p><em>Description of first house rule variant.</em></p>
-                </div>
+            <!-- <div class="house-rule-card">
+                <details>
+                    <summary>
+                        <h3>Wild Draw</h3>
+                        <p class="rule-brief">Add strategic tension by allowing players to draw multiple cards at once.</p>
+                    </summary>
+                    <div class="rule-content">
+                        <h4>Full Description</h4>
+                        <p>During your draw phase, you may choose to draw up to 3 cards from the draw pile instead of just one. However, if you draw more than one card, you must discard the same number of cards at the end of your turn.</p>
+                        <p><strong>Example:</strong> If you draw 3 cards, you must discard 3 cards to end your turn, maintaining your 5-card hand size.</p>
+                        
+                        <h4>Strategic Notes</h4>
+                        <ul>
+                            <li>Useful when you need specific cards to complete sets or runs</li>
+                            <li>Increases card cycling speed, making the game faster-paced</li>
+                            <li>You cannot draw from the discard pile when using this option</li>
+                        </ul>
+                        
+                        <h4>FAQ</h4>
+                        <dl class="rule-faq">
+                            <dt>Can I draw from the discard pile instead?</dt>
+                            <dd>No, wild draw only works with the draw pile. You must choose either normal draw (1 card from either pile) or wild draw (2-3 cards from draw pile only).</dd>
+                            
+                            <dt>Can I exchange a field card if I use wild draw?</dt>
+                            <dd>Yes, the exchange step remains optional and unchanged.</dd>
+                        </dl>
+                    </div>
+                </details>
+            </div> -->
+            
+            <!-- <div class="house-rule-card">
+                <details>
+                    <summary>
+                        <h3>Bonus Round</h3>
+                        <p class="rule-brief">A sixth round where scores can swing dramatically.</p>
+                    </summary>
+                    <div class="rule-content">
+                        <h4>Full Description</h4>
+                        <p>After completing the standard five rounds, play one additional "bonus round" where all point values are doubled. This creates a high-stakes finale where players can make dramatic comebacks or extend their lead.</p>
+                        
+                        <h4>Strategic Notes</h4>
+                        <ul>
+                            <li>Point values from the bonus round are doubled before adding to total score</li>
+                            <li>All other rules remain the same</li>
+                            <li>Creates exciting comeback potential for players behind in points</li>
+                        </ul>
+                        
+                        <h4>FAQ</h4>
+                        <dl class="rule-faq">
+                            <dt>Is the dealer rotation the same?</dt>
+                            <dd>Yes, the dealer continues to rotate left as in the previous rounds.</dd>
+                            
+                            <dt>Are all card values doubled or just the final score?</dt>
+                            <dd>All card point values are doubled when scoring the bonus round. An Ace = 2 points, face cards = 20 points, etc.</dd>
+                        </dl>
+                    </div>
+                </details>
+            </div> -->
+            
+            <div class="house-rule-card">
+                <details>
+                    <summary>
+                        <h3>Field Peek</h3>
+                        <p class="rule-brief">Look at your field cards before deciding which pile to use.</p>
+                    </summary>
+                    <div class="rule-content">
+                        <h4>Full Description</h4>
+                        <p>During setup, after the dealer deals two piles of 5 cards to each player, players may look at both piles before choosing which one becomes their field and which becomes their hand. This reduces the initial randomness and adds a strategic decision at the start of each round. Player's who choose to do this are given one point at the end of this round no matter the outcome.</p>
+                        
+                        <h4>Strategic Notes</h4>
+                        <ul>
+                            <li>Choose a field pile that minimizes unwanted high-value cards</li>
+                            <li>Consider your die roll when making this decision</li>
+                            <li>Makes the game slightly more skill-based and less luck-dependent</li>
+                            <li>Players who choose to do this are awarded one point at the end of the round regardless of outcome</li>
+                        </ul>
+                        
+                        <h4>FAQ</h4>
+                        <dl class="rule-faq">
+                            <dt>When exactly do I look at the cards?</dt>
+                            <dd>After all cards are dealt and before you roll your die. Look at both piles, then choose which is your field.</dd>
+                            
+                            <dt>Do I place the field cards face-down after looking?</dt>
+                            <dd>Yes, once you've chosen your field pile, place those cards face-down in a line as normal.</dd>
+                        </dl>
+                    </div>
+                </details>
+            </div>
+        </section>
+
+        <section id="standard-deck" class="section" style="display: none;">
+            <h2>Standard Deck Adaptation</h2>
+            <p class="section-intro">Don't have an eight-suit Trepenta deck? You can play with a standard 52-card deck using these adaptations.</p>
+            
+            <div class="card">
+                <h3>Using a Standard 52-Card Deck</h3>
+                <p>Trepenta can be adapted to work with a standard deck of playing cards. The core mechanics remain the same, with a few adjustments:</p>
                 
-                <div class="card">
-                    <h3>House Rule 2</h3>
-                    <p><em>Description of second house rule variant.</em></p>
-                </div>
+                <h4>Player Count Adjustments</h4>
+                <p>With a standard 52-card deck (4 suits), the game works best for <strong>2-3 players</strong>:</p>
+                <ul>
+                    <li><strong>2 players:</strong> Use all 4 suits (52 cards) - same as standard Trepenta</li>
+                    <li><strong>3 players:</strong> Remove one suit entirely, use 3 suits (39 cards)</li>
+                </ul>
                 
-                <div class="card">
-                    <h3>House Rule 3</h3>
-                    <p><em>Description of third house rule variant.</em></p>
-                </div>
+                <h4>Alternative for 4+ Players</h4>
+                <p>For 4 or more players, you'll need <strong>two standard decks</strong>:</p>
+                <ul>
+                    <li><strong>4 players:</strong> Use 6 suits from two decks (78 cards) - remove 2 suits entirely</li>
+                    <li><strong>5 players:</strong> Use 7 suits from two decks (91 cards) - remove 1 suit entirely</li>
+                    <li><strong>6 players:</strong> Use all 8 suits from two decks (104 cards)</li>
+                </ul>
+                <p><em>Note: When using two decks, keep all cards from a suit together. You'll have duplicates of the same cards, which is fine for gameplay.</em></p>
+                
+                <h4>Gameplay Remains the Same</h4>
+                <p>All other rules—field mechanics, die rolls, sets, runs, and scoring—work exactly as described in the core rules. The only difference is the deck composition.</p>
+            </div>
+            
+            <div class="card">
+                <h3>Why an Eight-Suit Deck?</h3>
+                <p>The eight-suit Trepenta deck was designed to provide:</p>
+                <ul>
+                    <li><strong>Flexible player scaling:</strong> Optimal gameplay for any group size from 2-6 players</li>
+                    <li><strong>Better run formation:</strong> More suit options increase strategic depth for building runs</li>
+                    <li><strong>Unique identity:</strong> A distinctive deck that sets Trepenta apart</li>
+                </ul>
+                <p>While the standard deck adaptation works well, the full eight-suit experience offers the complete Trepenta design as intended.</p>
             </div>
         </section>
 
