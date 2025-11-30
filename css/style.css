@@ -75,7 +75,7 @@ body {
 .hero {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     color: var(--white);
-    padding: 6rem 0;
+    padding: 6rem 0 3rem 0;
     text-align: center;
 }
 
@@ -145,6 +145,50 @@ body {
 .card:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Quick Reference Card */
+.quick-reference {
+    background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+    border-left: 4px solid var(--secondary-color);
+}
+
+.quick-reference h3 {
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+}
+
+.reference-subtitle {
+    font-size: 0.95rem;
+    color: #666;
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.reference-list {
+    margin-left: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.reference-list li {
+    margin-bottom: 0.75rem;
+    font-size: 1.05rem;
+}
+
+.reference-list strong {
+    color: var(--primary-color);
+}
+
+.reference-tip {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 1rem;
+    border-radius: 6px;
+    border-left: 3px solid var(--accent-color);
+    margin-top: 1rem;
+}
+
+.reference-tip strong {
+    color: var(--accent-color);
 }
 
 .card h3 {
@@ -220,17 +264,51 @@ html {
     scroll-behavior: smooth;
 }
 
-/* Section Backgrounds */
-#intro {
-    background-color: var(--light-bg);
-}
-
-#core-rules {
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
     background-color: var(--white);
 }
 
-#house-rules {
+table thead {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+table th,
+table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+table th {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+}
+
+table tbody tr:hover {
     background-color: var(--light-bg);
+}
+
+table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.scoring-table td:last-child,
+.player-table td:last-child {
+    font-weight: 600;
+    color: var(--secondary-color);
+}
+
+/* Section Backgrounds */
+
+#core-rules {
+    background-color: var(--white);
 }
 
 #about {

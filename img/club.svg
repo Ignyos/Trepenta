@@ -1,0 +1,11 @@
+<!-- Club — black suit -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Top circle -->
+  <circle cx="50" cy="25" r="18" fill="#111111"/>
+  <!-- Left circle -->
+  <circle cx="32" cy="55" r="18" fill="#111111"/>
+  <!-- Right circle -->
+  <circle cx="68" cy="55" r="18" fill="#111111"/>
+  <!-- Stem -->
+  <rect x="45" y="60" width="10" height="30" fill="#111111"/>
+</svg>

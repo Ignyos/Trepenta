@@ -1,0 +1,9 @@
+<!-- Diamond — red suit -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Color: Red -->
+  <path fill="#E02424" d="M50 5
+    L85 50
+    L50 95
+    L15 50
+    Z"/>
+</svg>

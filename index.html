@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Learn how to play Trepenta - a strategic card game with core rules and customizable house rules">
-    <title>Trepenta - Card Game Rules & Documentation</title>
+    <title>Trepenta - Card Game Rules</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -33,35 +33,192 @@
     <main class="container">
         <section id="intro" class="section">
             <h2>About the Game</h2>
-            <p>Trepenta is a versatile card game designed to be enjoyed with just the core rules, or enhanced with any combination of house rules to suit your playing group's preferences.</p>
-            <p>All house rules are designed to be compatible with each other, so mix and match to create your perfect game experience.</p>
+            <p>Trepenta is a strategic card game for 2-6 players that combines hand management with tactical field placement. The goal is to form sets and runs while minimizing points over five rounds.</p>
+            <br/>
+            <p>The core game can be played as-is, or enhanced with any combination of compatible house rules to suit your group's preferences.</p>
         </section>
 
         <section id="core-rules" class="section">
-            <h2>Core Rules</h2>
+            <h2>How to Play Trepenta</h2>
+            
             <div class="card">
-                <h3>Getting Started</h3>
-                <p><em>Core game rules will be documented here.</em></p>
+                <h3>Objective</h3>
+                <p>Be the player with the <strong>fewest points</strong> after five rounds by forming sets and runs in your hand while strategically managing your field cards.</p>
+            </div>
+
+            <div class="card quick-reference">
+                <h3>🎴 Quick Reference</h3>
+                <p class="reference-subtitle">Each turn consists of three steps:</p>
+                <ol class="reference-list">
+                    <li><strong>Draw</strong> one card (from discard pile or draw pile)</li>
+                    <li><strong>Exchange</strong> (optional)—swap a hand card with a matching-value face-down field card</li>
+                    <li><strong>Discard</strong> one card to end your turn</li>
+                </ol>
+                <div class="reference-tip">
+                    <strong>Goal:</strong> Form a set (3+ same rank) or run (3+ consecutive suited cards) in your hand. Cards not in a set/run count as points.
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>What You Need</h3>
+                <p><strong>Players:</strong> 2 to 6</p>
+                <p><strong>A Trepenta Deck:</strong></p>
+                <ul>
+                    <li>Eight suits of 13 cards each (104 cards total)</li>
+                    <!-- <li><strong>Red suits:</strong> Heart, Diamond, Crescent, Arrow</li> -->
+                    <!-- <li><strong>Black suits:</strong> Club, Spade, Hammer, Jar</li> -->
+                    <!-- <li><strong>Card ranks:</strong> Ace, 2, 3, 4, 5, 6, 7, 8, 9, 10, Jack, Queen, King</li> -->
+                </ul>
+                <p><strong>Six standard six-sided dice</strong> (one per player)</p>
+                <!-- <p><strong>Paper and pencil</strong> for scorekeeping</p> -->
+            </div>
+
+            <div class="card">
+                <h3>Deck Configuration by Player Count</h3>
+                <table class="player-table">
+                    <thead>
+                        <tr>
+                            <th>Players</th>
+                            <th>Suits Used</th>
+                            <th>Total Cards</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2 players</td>
+                            <td>4 suits</td>
+                            <td>52 cards</td>
+                        </tr>
+                        <tr>
+                            <td>3 players</td>
+                            <td>5 suits</td>
+                            <td>65 cards</td>
+                        </tr>
+                        <tr>
+                            <td>4 players</td>
+                            <td>6 suits</td>
+                            <td>78 cards</td>
+                        </tr>
+                        <tr>
+                            <td>5 players</td>
+                            <td>7 suits</td>
+                            <td>91 cards</td>
+                        </tr>
+                        <tr>
+                            <td>6 players</td>
+                            <td>8 suits</td>
+                            <td>104 cards</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <h3>Setup</h3>
+                <ol>
+                    <li>Select the appropriate number of suits based on player count (see table above)</li>
+                    <li>Players agree on who will deal first. After each round, the dealer rotates to the left</li>
+                    <li>The dealer shuffles and deals each player two separate piles of 5 cards each</li>
+                    <li>Flip one card face-up to start the discard pile</li>
+                    <li>Each player chooses one pile to place face-down in a line (left to right) as their <strong>field</strong>, and keeps the other pile as their <strong>hand</strong></li>
+                    <li>Each player rolls their die and places it to the left of their field cards</li>
+                </ol>
+            </div>
+
+            <div class="card">
+                <h3>Understanding the Field & Die</h3>
+                <p>The five face-down cards in your field serve two important purposes:</p>
+                <ul>
+                    <li>A reserve of cards to exchange with your hand</li>
+                    <li>A mechanism to trigger the end of the round</li>
+                </ul>
                 
-                <h4>Setup</h4>
+                <h4>Field Card Values</h4>
+                <p>Your die roll determines the value of your field cards from left to right. Each position represents a sequential card value.</p>
+                <p><strong>Example:</strong> If you roll a 3, your field positions are valued: 3, 4, 5, 6, 7 (left to right).</p>
+                
+                <h4>How to Exchange Field Cards</h4>
+                <p>On your turn, you may optionally exchange one card from your hand with a face-down field card, but only if:</p>
                 <ul>
-                    <li>Number of players</li>
-                    <li>Deck composition</li>
-                    <li>Initial deal</li>
+                    <li>You hold a card that matches that position's value</li>
+                    <li>The field card at that position is still face-down</li>
                 </ul>
+                <p><strong>Example:</strong> With a field valued 1-2-3-4-5, if you hold a card with value 5 and the 5th position is face-down, you may place your 5 face-up in that position and take the face-down card into your hand.</p>
+                
+                <h4>Ending the Round</h4>
+                <p>When any player exchanges their fifth and final field card (all five positions now face-up and in correct order), each other player takes one more turn, then the round ends and scoring begins.</p>
+            </div>
 
-                <h4>Gameplay</h4>
-                <ul>
-                    <li>Turn structure</li>
-                    <li>Valid moves</li>
-                    <li>Winning conditions</li>
-                </ul>
+            <div class="card">
+                <h3>How to Play</h3>
+                <p>The player to the left of the dealer goes first. Play continues clockwise.</p>
+                
+                <h4>Turn Sequence</h4>
+                <p>On each turn, you must perform these actions in order:</p>
+                <ol>
+                    <li><strong>Draw:</strong> Take the top card from either the discard pile or the draw pile (required)</li>
+                    <li><strong>Exchange:</strong> Optionally exchange one card from your hand with a face-down field card (if you have a matching value)</li>
+                    <li><strong>Discard:</strong> Place one card from your hand face-up onto the discard pile (required)</li>
+                </ol>
+                <p><strong>Note:</strong> Your hand always contains exactly 5 cards at the start and end of each turn.</p>
+                
+                <h4>When the Draw Pile Runs Out</h4>
+                <p>If the draw pile becomes completely depleted during any player's turn, that player completes their turn and the round ends immediately.</p>
+            </div>
 
-                <h4>Scoring</h4>
+            <div class="card">
+                <h3>Scoring</h3>
+                <p>At the end of each round, all players reveal their hands. Only the cards in your hand count for scoring—field cards do not count.</p>
+                
+                <h4>Sets and Runs</h4>
+                <p>Cards that form valid sets or runs score <strong>0 points</strong>. All other cards score their face value.</p>
+                
                 <ul>
-                    <li>Point calculation</li>
-                    <li>Game end conditions</li>
+                    <li><strong>Set:</strong> Three or more cards of the same rank (suits don't matter)<br>
+                    <em>Example: 7 of Hearts, 7 of Clubs, 7 of Spades</em></li>
+                    <li><strong>Run:</strong> Three or more consecutive cards of the same suit<br>
+                    <em>Example: 4-5-6 of Diamonds</em></li>
                 </ul>
+                
+                <h4>Run Wrapping Rules</h4>
+                <p>Runs may wrap around the Ace boundary <strong>once</strong>:</p>
+                <ul>
+                    <li><strong>Valid:</strong> Queen-King-Ace or Ace-2-3</li>
+                    <li><strong>Invalid:</strong> Queen-King-Ace-2 (wraps twice)</li>
+                </ul>
+                
+                <h4>Card Point Values</h4>
+                <table class="scoring-table">
+                    <thead>
+                        <tr>
+                            <th>Card</th>
+                            <th>Point Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Ace</td>
+                            <td>1 point</td>
+                        </tr>
+                        <tr>
+                            <td>2 through 10</td>
+                            <td>Face value (2-10 points)</td>
+                        </tr>
+                        <tr>
+                            <td>Jack, Queen, King</td>
+                            <td>10 points each</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <p><strong>Important:</strong> Each card can only belong to one set or run. You cannot use the same card in multiple combinations.</p>
+            </div>
+
+            <div class="card">
+                <h3>Winning the Game</h3>
+                <p>Trepenta is played for exactly <strong>five rounds</strong>. After the fifth round, players add up their total score from all rounds.</p>
+                <p>The player with the <strong>lowest total score wins</strong>.</p>
+                <p>In the event of a tie, all tied players share the victory—there is no tie-breaking mechanism.</p>
             </div>
         </section>
 
@@ -90,12 +247,15 @@
         <section id="about" class="section">
             <h2>About</h2>
             <p>This documentation is maintained to help players learn and enjoy Trepenta. Whether you're new to the game or an experienced player looking to try new variations, you'll find everything you need here.</p>
+            <br/>
+            <p>The name <strong>Trepenta</strong> comes from the game's fundamental structure: <em>Tre</em> (three) + <em>penta</em> (five). The game revolves around three key mechanics that each use the number five: five cards in your field, five cards in your hand, and five rounds per game.</p>
+            <br/>
         </section>
     </main>
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 Trepenta Documentation. All rights reserved.</p>
+            <p>&copy; 2025 Trepenta. All rights reserved.</p>
         </div>
     </footer>
 

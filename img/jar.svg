@@ -1,0 +1,9 @@
+<!-- Jar — black suit -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Jar body -->
+  <ellipse cx="50" cy="60" rx="25" ry="30" fill="#111111"/>
+  <!-- Jar neck -->
+  <rect x="35" y="20" width="30" height="20" fill="#111111"/>
+  <!-- Jar lip -->
+  <rect x="32" y="15" width="36" height="8" fill="#111111"/>
+</svg>

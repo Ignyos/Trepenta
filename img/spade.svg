@@ -1,0 +1,9 @@
+<!-- Spade — black suit -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Spade body -->
+  <path fill="#111111" d="M50 5
+    C 70 25, 90 45, 50 85
+    C 10 45, 30 25, 50 5 Z"/>
+  <!-- Stem -->
+  <rect x="45" y="70" width="10" height="25" fill="#111111"/>
+</svg>
