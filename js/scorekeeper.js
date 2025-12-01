@@ -1,6 +1,6 @@
 class Player {
     constructor(data = {}) {
-        this.id = Object.hasOwn(data, 'id') ? data.id : Date.now().toString();
+        this.id = Object.hasOwn(data, 'id') ? data.id : `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
         this.name = Object.hasOwn(data, 'name') ? data.name : '';
         this.createdAt = Object.hasOwn(data, 'createdAt') ? data.createdAt : new Date().toISOString();
     }
@@ -8,7 +8,7 @@ class Player {
 
 class Game {
     constructor(data = {}) {
-        this.id = Object.hasOwn(data, 'id') ? data.id : Date.now().toString();
+        this.id = Object.hasOwn(data, 'id') ? data.id : `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
         this.players = Object.hasOwn(data, 'players') ? data.players : []; // Array of player IDs in turn order
         this.playerNames = Object.hasOwn(data, 'playerNames') ? data.playerNames : {}; // Map of player ID to name
         this.dealerIndex = Object.hasOwn(data, 'dealerIndex') ? data.dealerIndex : 0;
@@ -291,7 +291,6 @@ function renderScoreGrid() {
                 data-player="${playerId}" 
                 data-round="${round}"
                 ${isEditable ? '' : 'disabled'}
-                min="0" 
                 placeholder="-"></td>`;
         }
         
@@ -326,7 +325,7 @@ function handleScoreChange(event) {
     const round = parseInt(input.dataset.round);
     const score = input.value === '' ? null : parseInt(input.value);
 
-    if (score !== null && score >= 0) {
+    if (score !== null) {
         currentGame.addScore(playerId, round, score);
     }
 
