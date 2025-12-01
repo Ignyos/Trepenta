@@ -47,7 +47,7 @@ class Game {
 // IndexedDB Manager
 class ScorekeeperDB {
     constructor() {
-        this.dbName = 'TrepentaScorekeeper';
+        this.dbName = 'ignyos.trepenta';
         this.version = 1;
         this.db = null;
     }
