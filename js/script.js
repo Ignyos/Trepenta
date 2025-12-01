@@ -1,21 +1,3 @@
-// Check URL parameters for special modes
-const urlParams = new URLSearchParams(window.location.search);
-
-// Standard deck mode
-if (urlParams.get('deck') === 'standard') {
-    // Show the standard deck section
-    const standardDeckSection = document.getElementById('standard-deck');
-    if (standardDeckSection) {
-        standardDeckSection.style.display = 'block';
-    }
-    
-    // Show the navigation item
-    const navItem = document.getElementById('nav-standard-deck');
-    if (navItem) {
-        navItem.style.display = 'block';
-    }
-}
-
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
