@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Trepenta scorekeeper - track scores for your card game">
+    <title>Scorekeeper - Trepenta</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/scorekeeper.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>Trepenta Scorekeeper</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Rules</a></li>
+                <li><a href="#" onclick="showHistory(); return false;">History</a></li>
+                <li><a href="#" onclick="newGame(); return false;">New Game</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container scorekeeper-container">
+        <!-- Setup View -->
+        <section id="setup-view">
+            <h2>New Game Setup</h2>
+            <p class="section-intro">Add 2-6 players in turn order. The first player will be the initial dealer.</p>
+            
+            <div class="card">
+                <h3>Players</h3>
+                <div id="player-inputs"></div>
+                <datalist id="player-suggestions"></datalist>
+                <button onclick="addPlayerInput()" class="btn btn-secondary">+ Add Player</button>
+            </div>
+
+            <div class="setup-actions">
+                <button onclick="startGame()" class="btn btn-primary">Start Game</button>
+            </div>
+        </section>
+
+        <!-- Score View -->
+        <section id="score-view" style="display: none;">
+            <div class="score-header">
+                <h2>Score Grid</h2>
+                <div class="score-actions">
+                    <button onclick="saveAndExit()" class="btn btn-secondary">Save & Exit</button>
+                    <button onclick="newGame()" class="btn btn-outline">New Game</button>
+                </div>
+            </div>
+
+            <div id="score-grid" class="score-grid-container"></div>
+            
+            <div id="winner-announcement" class="winner-announcement" style="display: none;"></div>
+
+            <div class="score-legend">
+                <p>Each round header shows the dealer's initials. The dealer rotates clockwise each round.</p>
+            </div>
+        </section>
+
+        <!-- History View -->
+        <section id="history-view" style="display: none;">
+            <h2>Game History</h2>
+            <div id="game-history-list"></div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Trepenta. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/scorekeeper.js"></script>
+    <script>
+        // Initialize with two player inputs
+        addPlayerInput();
+        addPlayerInput();
+
+        function addPlayerInput() {
+            const container = document.getElementById('player-inputs');
+            const count = container.children.length;
+            
+            if (count >= 6) {
+                alert('Maximum 6 players allowed');
+                return;
+            }
+
+            const playerDiv = document.createElement('div');
+            playerDiv.className = 'player-input-group';
+            playerDiv.innerHTML = `
+                <input type="text" 
+                    class="player-name-input" 
+                    placeholder="Player ${count + 1} name" 
+                    list="player-suggestions"
+                    required>
+                <div class="player-controls">
+                    <button onclick="movePlayerUp(this)" class="btn-icon" title="Move up">↑</button>
+                    <button onclick="movePlayerDown(this)" class="btn-icon" title="Move down">↓</button>
+                    <button onclick="removePlayer(this)" class="btn-icon btn-danger" title="Remove">×</button>
+                </div>
+            `;
+            container.appendChild(playerDiv);
+        }
+
+        function removePlayer(btn) {
+            const container = document.getElementById('player-inputs');
+            if (container.children.length <= 2) {
+                alert('Minimum 2 players required');
+                return;
+            }
+            btn.closest('.player-input-group').remove();
+        }
+
+        function movePlayerUp(btn) {
+            const group = btn.closest('.player-input-group');
+            const prev = group.previousElementSibling;
+            if (prev) {
+                group.parentNode.insertBefore(group, prev);
+            }
+        }
+
+        function movePlayerDown(btn) {
+            const group = btn.closest('.player-input-group');
+            const next = group.nextElementSibling;
+            if (next) {
+                group.parentNode.insertBefore(next, group);
+            }
+        }
+
+        async function startGame() {
+            const inputs = document.querySelectorAll('.player-name-input');
+            const playerNames = Array.from(inputs).map(input => input.value.trim()).filter(name => name);
+
+            if (playerNames.length < 2) {
+                alert('Please enter at least 2 player names');
+                return;
+            }
+
+            // Create player records and save to database
+            const players = [];
+            for (const name of playerNames) {
+                const player = new Player({ name });
+                try {
+                    await db.addPlayer(player);
+                } catch (e) {
+                    // Player might already exist, that's okay
+                }
+                players.push(player.id);
+            }
+
+            // Create new game
+            currentGame = new Game();
+            currentGame.players = players;
+            currentGame.playerNames = {};
+            players.forEach((id, index) => {
+                currentGame.playerNames[id] = playerNames[index];
+            });
+
+            // Save game
+            await db.saveGame(currentGame);
+            localStorage.setItem('currentGameId', currentGame.id);
+
+            showScoreGrid();
+        }
+
+        function saveAndExit() {
+            alert('Game saved! You can resume it later from the History page.');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

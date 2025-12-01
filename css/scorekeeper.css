@@ -1,0 +1,387 @@
+/* Scorekeeper-specific styles */
+
+.scorekeeper-container {
+    max-width: 1200px;
+    padding: 2rem 1rem;
+}
+
+/* Setup View */
+#setup-view {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.section-intro {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.player-input-group {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    align-items: center;
+}
+
+.player-name-input {
+    flex: 1;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    transition: border-color 0.3s;
+}
+
+.player-name-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.player-controls {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.btn-icon {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: 2px solid var(--border-color);
+    background: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-icon:hover {
+    background: var(--background-light);
+    border-color: var(--primary-color);
+}
+
+.btn-icon.btn-danger {
+    border-color: #dc3545;
+    color: #dc3545;
+}
+
+.btn-icon.btn-danger:hover {
+    background: #dc3545;
+    color: white;
+}
+
+.setup-actions {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+/* Score View */
+.score-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.score-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.score-grid-container {
+    overflow-x: auto;
+    margin-bottom: 2rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.score-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+}
+
+.score-table th,
+.score-table td {
+    padding: 0.75rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.score-table th {
+    background: var(--background-light);
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.round-header {
+    text-align: center;
+    vertical-align: middle;
+    line-height: 1.3;
+}
+
+.dealer-initials {
+    display: inline-block;
+    background: var(--primary-color);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin-top: 2px;
+}
+
+.score-table tbody tr:hover {
+    background: var(--background-light);
+}
+
+.player-name {
+    text-align: left;
+    font-weight: 500;
+    min-width: 120px;
+}
+
+.score-input {
+    width: 60px;
+    padding: 0.5rem;
+    text-align: center;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.score-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.score-input:disabled {
+    background: #e9ecef;
+    cursor: not-allowed;
+}
+
+.total-col {
+    background: #e3f2fd;
+    font-weight: bold;
+}
+
+.score-legend {
+    padding: 1rem;
+    background: var(--background-light);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.score-legend p {
+    margin: 0.5rem 0;
+}
+.score-legend {
+    padding: 1rem;
+    background: var(--background-light);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.score-legend p {
+    margin: 0.5rem 0;
+}
+
+.score-legend strong {
+    color: var(--text-primary);
+}
+
+.winner-announcement h3 {
+    margin: 0 0 1rem 0;
+    font-size: 2rem;
+}
+
+.winner-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 1rem 0;
+}
+
+/* History View */
+#game-history-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.history-card {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.history-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.history-date {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    background: #28a745;
+    color: white;
+}
+
+.badge.in-progress {
+    background: #ffc107;
+    color: #000;
+}
+
+.history-players {
+    margin-bottom: 0.75rem;
+    font-weight: 500;
+}
+
+.winner {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin: 0.5rem 0;
+}
+
+.history-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.btn-small {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    border: 2px solid var(--primary-color);
+    background: white;
+    color: var(--primary-color);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 600;
+}
+
+.btn-small:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+.btn-small.btn-danger {
+    border-color: #dc3545;
+    color: #dc3545;
+}
+
+.btn-small.btn-danger:hover {
+    background: #dc3545;
+    color: white;
+}
+
+.no-games {
+    text-align: center;
+    color: var(--text-secondary);
+    padding: 3rem 1rem;
+    font-style: italic;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-outline:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .score-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .score-actions {
+        width: 100%;
+        justify-content: stretch;
+    }
+
+    .score-actions button {
+        flex: 1;
+    }
+
+    .score-table th,
+    .score-table td {
+        padding: 0.5rem 0.25rem;
+        font-size: 0.9rem;
+    }
+
+    .score-input {
+        width: 50px;
+        padding: 0.4rem;
+        font-size: 0.9rem;
+    }
+
+    .dealer-initials {
+        font-size: 0.65rem;
+        padding: 1px 4px;
+    }
+
+    .winner-announcement h3 {
+        padding: 1px 4px;
+    }
+
+    .winner-announcement h3 {
+        font-size: 1.5rem;
+    }
+
+    .winner-name {
+        font-size: 1.2rem;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .navbar,
+    .score-header,
+    .score-actions,
+    .score-legend,
+    .winner-announcement button,
+    .history-actions {
+        display: none;
+    }
+
+    .score-table {
+        page-break-inside: avoid;
+    }
+
+    .score-input {
+        border: none;
+        background: transparent;
+    }
+}
