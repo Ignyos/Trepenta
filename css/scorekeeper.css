@@ -233,6 +233,7 @@ body {
     border-radius: 8px;
     font-size: 0.9rem;
     color: var(--text-secondary);
+    margin-top: 1rem;
 }
 
 .score-legend p {
