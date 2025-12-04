@@ -279,7 +279,9 @@ function renderScoreGrid() {
     currentGame.players.forEach((playerId, index) => {
         html += '<tr>';
         
-        html += `<td class="player-name">${currentGame.playerNames[playerId]}</td>`;
+        html += `<td class="player-name editable-name" 
+            data-player="${playerId}" 
+            title="Click to edit name">${currentGame.playerNames[playerId]}</td>`;
         
         // Score inputs for each round
         for (let round = 1; round <= 5; round++) {
@@ -306,6 +308,11 @@ function renderScoreGrid() {
     // Add event listeners to score inputs
     document.querySelectorAll('.score-input').forEach(input => {
         input.addEventListener('change', handleScoreChange);
+    });
+
+    // Add event listeners to editable player names
+    document.querySelectorAll('.editable-name').forEach(cell => {
+        cell.addEventListener('click', makeNameEditable);
     });
 
     // Show winner if game is complete
@@ -338,6 +345,43 @@ function handleScoreChange(event) {
 
 function getInitials(name) {
     return name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+}
+
+function makeNameEditable(event) {
+    const cell = event.target;
+    const playerId = cell.dataset.player;
+    const currentName = currentGame.playerNames[playerId];
+
+    // Create input element
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.value = currentName;
+    input.className = 'name-edit-input';
+    
+    // Replace cell content with input
+    cell.textContent = '';
+    cell.appendChild(input);
+    input.focus();
+    input.select();
+
+    // Save on blur or Enter key
+    const saveEdit = () => {
+        const newName = input.value.trim();
+        if (newName && newName !== currentName) {
+            currentGame.playerNames[playerId] = newName;
+            db.saveGame(currentGame);
+        }
+        renderScoreGrid();
+    };
+
+    input.addEventListener('blur', saveEdit);
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            input.blur();
+        } else if (e.key === 'Escape') {
+            renderScoreGrid(); // Cancel edit
+        }
+    });
 }
 
 function showWinner() {

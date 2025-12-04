@@ -1,8 +1,15 @@
 /* Scorekeeper-specific styles */
 
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
 .scorekeeper-container {
     max-width: 1200px;
     padding: 2rem 1rem;
+    flex: 1;
 }
 
 /* Setup View */
@@ -154,6 +161,41 @@
     text-align: left;
     font-weight: 500;
     min-width: 120px;
+}
+
+.editable-name {
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.editable-name:hover {
+    background-color: var(--background-light);
+    color: var(--primary-color);
+}
+
+.editable-name:hover::after {
+    content: '✏️';
+    position: absolute;
+    right: 0.5rem;
+    font-size: 0.85rem;
+    opacity: 0.6;
+}
+
+.name-edit-input {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 2px solid var(--primary-color);
+    border-radius: 4px;
+    background-color: var(--background-light);
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.name-edit-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
 }
 
 .score-input {
