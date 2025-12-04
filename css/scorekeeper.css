@@ -31,11 +31,14 @@
     border: 2px solid var(--border-color);
     border-radius: 6px;
     transition: border-color 0.3s;
+    background-color: var(--card-bg);
+    color: var(--text-color);
 }
 
 .player-name-input:focus {
     outline: none;
     border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
 }
 
 .player-controls {
@@ -48,7 +51,8 @@
     height: 36px;
     padding: 0;
     border: 2px solid var(--border-color);
-    background: white;
+    background: var(--card-bg);
+    color: var(--text-color);
     border-radius: 6px;
     cursor: pointer;
     font-size: 1.2rem;
@@ -97,9 +101,10 @@
 .score-grid-container {
     overflow-x: auto;
     margin-bottom: 2rem;
-    background: white;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: var(--shadow);
 }
 
 .score-table {
@@ -116,11 +121,12 @@
 }
 
 .score-table th {
-    background: var(--background-light);
+    background: var(--primary-color);
     font-weight: 600;
     position: sticky;
     top: 0;
     z-index: 10;
+    color: var(--white);
 }
 
 .round-header {
@@ -131,8 +137,8 @@
 
 .dealer-initials {
     display: inline-block;
-    background: var(--primary-color);
-    color: white;
+    background: var(--accent-color);
+    color: var(--background-dark);
     padding: 2px 6px;
     border-radius: 4px;
     font-size: 0.75rem;
@@ -157,21 +163,26 @@
     border: 2px solid var(--border-color);
     border-radius: 4px;
     font-size: 1rem;
+    background-color: var(--background-light);
+    color: var(--text-color);
 }
 
 .score-input:focus {
     outline: none;
     border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
 }
 
 .score-input:disabled {
-    background: #e9ecef;
+    background: var(--background-darker);
     cursor: not-allowed;
+    opacity: 0.6;
 }
 
 .total-col {
-    background: #e3f2fd;
+    background: rgba(102, 126, 234, 0.2);
     font-weight: bold;
+    color: var(--primary-color);
 }
 
 .score-legend {
@@ -219,16 +230,17 @@
 }
 
 .history-card {
-    background: white;
+    background: var(--card-bg);
     border-radius: 8px;
     padding: 1.5rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: var(--shadow);
     transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid var(--border-color);
 }
 
 .history-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    box-shadow: 0 8px 30px rgba(102, 126, 234, 0.3);
 }
 
 .history-header {
@@ -248,13 +260,13 @@
     border-radius: 12px;
     font-size: 0.85rem;
     font-weight: 600;
-    background: #28a745;
+    background: var(--primary-color);
     color: white;
 }
 
 .badge.in-progress {
-    background: #ffc107;
-    color: #000;
+    background: var(--accent-color);
+    color: var(--background-dark);
 }
 
 .history-players {
@@ -278,7 +290,7 @@
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
     border: 2px solid var(--primary-color);
-    background: white;
+    background: var(--card-bg);
     color: var(--primary-color);
     border-radius: 6px;
     cursor: pointer;
@@ -289,6 +301,7 @@
 .btn-small:hover {
     background: var(--primary-color);
     color: white;
+    box-shadow: var(--glow);
 }
 
 .btn-small.btn-danger {
@@ -317,6 +330,18 @@
 .btn-outline:hover {
     background: var(--primary-color);
     color: white;
+    box-shadow: var(--glow);
+}
+
+.btn-secondary {
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    color: var(--text-color);
+}
+
+.btn-secondary:hover {
+    background: var(--background-light);
+    border-color: var(--primary-color);
 }
 
 /* Mobile Responsive */
