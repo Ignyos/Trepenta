@@ -309,6 +309,7 @@ body {
 .badge.in-progress {
     background: var(--accent-color);
     color: var(--background-dark);
+    margin-left: .5rem;
 }
 
 .history-players {
