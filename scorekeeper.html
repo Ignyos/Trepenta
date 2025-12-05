@@ -27,7 +27,7 @@
         <!-- Setup View -->
         <section id="setup-view">
             <h2>New Game Setup</h2>
-            <p class="section-intro">Add 2-6 players in turn order. The first player will be the initial dealer.</p>
+            <p class="section-intro">Add 2-6 players in turn order. <span style="color:white">The first player will be the initial dealer.</span></p>
             
             <div class="card">
                 <h3>Players</h3>
@@ -92,9 +92,9 @@
 
         function renderHouseRulesCheckboxes() {
             const container = document.getElementById('house-rules-checkboxes');
-            container.innerHTML = HOUSE_RULES.map(rule => `
+            container.innerHTML = HOUSE_RULES.map((rule, index) => `
                 <label class="house-rule-checkbox">
-                    <input type="checkbox" value='${JSON.stringify(rule)}'>
+                    <input type="checkbox" value="${index}">
                     <span class="rule-name">${rule.name}</span>
                     <small class="rule-brief">${rule.brief}</small>
                 </label>
@@ -263,7 +263,7 @@
 
             // Get selected house rules
             const selectedRules = Array.from(document.querySelectorAll('#house-rules-checkboxes input:checked'))
-                .map(checkbox => JSON.parse(checkbox.value));
+                .map(checkbox => HOUSE_RULES[parseInt(checkbox.value)]);
 
             // Create new game
             currentGame = new Game();
