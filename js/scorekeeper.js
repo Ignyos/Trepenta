@@ -332,14 +332,17 @@ function renderScoreGrid() {
         cell.addEventListener('click', makeNameEditable);
     });
 
-    // Show winner if game is complete
-    if (currentGame.isComplete() && !currentGame.completed) {
-        currentGame.completed = true;
-        db.saveGame(currentGame);
+    // Show Finish Game button if game has enough scores and isn't completed
+    const finishBtn = document.getElementById('finish-game-btn');
+    if (finishBtn && !currentGame.completed && currentGame.isComplete()) {
+        finishBtn.style.display = 'inline-block';
+    } else if (finishBtn && !currentGame.completed) {
+        finishBtn.style.display = 'none';
     }
 
     if (currentGame.completed) {
         showWinner();
+        if (finishBtn) finishBtn.style.display = 'none';
     }
 }
 
@@ -362,6 +365,19 @@ function handleScoreChange(event) {
 
 function getInitials(name) {
     return name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+}
+
+function finishGame() {
+    if (!currentGame.isComplete()) {
+        alert('Please enter scores for all rounds before finishing the game.');
+        return;
+    }
+    
+    if (confirm('Mark this game as complete? Scores will be locked.')) {
+        currentGame.completed = true;
+        db.saveGame(currentGame);
+        renderScoreGrid();
+    }
 }
 
 function makeNameEditable(event) {
@@ -409,13 +425,26 @@ function showWinner() {
     }));
     totals.sort((a, b) => a.total - b.total);
 
+    const lowestScore = totals[0].total;
+    const winners = totals.filter(p => p.total === lowestScore);
+
     const winnerDiv = document.getElementById('winner-announcement');
     winnerDiv.style.display = 'block';
-    winnerDiv.innerHTML = `
-        <h3>🏆 Game Complete!</h3>
-        <p class="winner-name">${totals[0].name} wins with ${totals[0].total} points!</p>
-        <button onclick="newGame()" class="btn btn-primary">New Game</button>
-    `;
+    
+    if (winners.length === 1) {
+        winnerDiv.innerHTML = `
+            <h3>🏆 Game Complete!</h3>
+            <p class="winner-name">${winners[0].name} wins with ${winners[0].total} points!</p>
+            <button onclick="newGame()" class="btn btn-primary">New Game</button>
+        `;
+    } else {
+        const winnerNames = winners.map(w => w.name).join(' and ');
+        winnerDiv.innerHTML = `
+            <h3>🏆 Game Complete!</h3>
+            <p class="winner-name">It's a tie! ${winnerNames} tied with ${lowestScore} points!</p>
+            <button onclick="newGame()" class="btn btn-primary">New Game</button>
+        `;
+    }
 }
 
 function newGame() {
