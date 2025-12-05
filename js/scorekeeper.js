@@ -15,6 +15,7 @@ class Game {
         this.scores = Object.hasOwn(data, 'scores') ? data.scores : {}; // Map of playerId -> [round1, round2, ...]
         this.currentRound = Object.hasOwn(data, 'currentRound') ? data.currentRound : 1;
         this.completed = Object.hasOwn(data, 'completed') ? data.completed : false;
+        this.houseRules = Object.hasOwn(data, 'houseRules') ? data.houseRules : []; // Array of house rule objects
         this.createdAt = Object.hasOwn(data, 'createdAt') ? data.createdAt : new Date().toISOString();
     }
 
@@ -185,13 +186,19 @@ function showHistory() {
     loadGameHistory();
 }
 
-async function loadPlayerSuggestions() {
+async function loadPlayerSuggestions(excludeNames = []) {
     const players = await db.getAllPlayers();
     const datalist = document.getElementById('player-suggestions');
     datalist.innerHTML = '';
-    players.forEach(player => {
+    
+    // Get unique player names, exclude already entered names, and sort alphabetically
+    const uniqueNames = [...new Set(players.map(p => p.name))]
+        .filter(name => !excludeNames.map(n => n.toLowerCase()).includes(name.toLowerCase()))
+        .sort();
+    
+    uniqueNames.forEach(name => {
         const option = document.createElement('option');
-        option.value = player.name;
+        option.value = name;
         datalist.appendChild(option);
     });
 }
@@ -222,6 +229,15 @@ function createGameHistoryCard(gameData) {
 
     const playerNames = game.players.map(id => game.playerNames[id]).join(', ');
     
+    let houseRulesBadges = '';
+    if (game.houseRules && game.houseRules.length > 0) {
+        houseRulesBadges = '<div class="house-rules-tags">' + 
+            game.houseRules.map(rule => 
+                `<span class="rule-badge" style="background-color: ${rule.color}" title="${rule.brief}">${rule.name}</span>`
+            ).join('') + 
+            '</div>';
+    }
+    
     let winnerInfo = '';
     if (game.completed) {
         const totals = game.players.map(id => ({ id, total: game.getTotal(id), name: game.playerNames[id] }));
@@ -235,6 +251,7 @@ function createGameHistoryCard(gameData) {
             ${game.completed ? '<span class="badge">Completed</span>' : '<span class="badge in-progress">In Progress</span>'}
         </div>
         <div class="history-players">${playerNames}</div>
+        ${houseRulesBadges}
         ${winnerInfo}
         <div class="history-actions">
             <button onclick="viewGame('${game.id}')" class="btn-small">View</button>

@@ -36,6 +36,11 @@
                 <button onclick="addPlayerInput()" class="btn btn-secondary">+ Add Player</button>
             </div>
 
+            <div class="card">
+                <h3>House Rules <span style="font-weight: normal; font-size: 0.9rem; color: var(--text-secondary);">(Optional)</span></h3>
+                <div id="house-rules-checkboxes" class="house-rules-checkboxes"></div>
+            </div>
+
             <div class="setup-actions">
                 <button onclick="startGame()" class="btn btn-primary">Start Game</button>
             </div>
@@ -74,11 +79,26 @@
         </div>
     </footer>
 
+    <script src="js/house-rules.js"></script>
     <script src="js/scorekeeper.js"></script>
     <script>
         // Initialize with two player inputs
         addPlayerInput();
         addPlayerInput();
+
+        // Render house rules checkboxes
+        renderHouseRulesCheckboxes();
+
+        function renderHouseRulesCheckboxes() {
+            const container = document.getElementById('house-rules-checkboxes');
+            container.innerHTML = HOUSE_RULES.map(rule => `
+                <label class="house-rule-checkbox">
+                    <input type="checkbox" value='${JSON.stringify(rule)}'>
+                    <span class="rule-name">${rule.name}</span>
+                    <small class="rule-brief">${rule.brief}</small>
+                </label>
+            `).join('');
+        }
 
         function addPlayerInput() {
             const container = document.getElementById('player-inputs');
@@ -104,6 +124,74 @@
                 </div>
             `;
             container.appendChild(playerDiv);
+            
+            // Add event listener to update suggestions when input changes
+            const input = playerDiv.querySelector('.player-name-input');
+            input.addEventListener('input', updatePlayerSuggestions);
+            
+            // Add Enter key handler to move to next input or add new player
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const allInputs = Array.from(document.querySelectorAll('.player-name-input'));
+                    const currentIndex = allInputs.indexOf(this);
+                    
+                    // If this is the last input and has a value, add a new player input
+                    if (currentIndex === allInputs.length - 1 && this.value.trim()) {
+                        if (allInputs.length < 6) {
+                            addPlayerInput();
+                            // Focus the newly added input
+                            setTimeout(() => {
+                                const newInputs = document.querySelectorAll('.player-name-input');
+                                newInputs[newInputs.length - 1].focus();
+                            }, 0);
+                        }
+                    } else if (currentIndex < allInputs.length - 1) {
+                        // Move to next input
+                        allInputs[currentIndex + 1].focus();
+                    }
+                }
+            });
+            
+            // Add validation on blur to check for duplicates in database
+            input.addEventListener('blur', async function() {
+                const name = this.value.trim();
+                if (!name) return;
+                
+                // Get all players from database
+                const players = await db.getAllPlayers();
+                const allExistingNames = players.map(p => p.name.toLowerCase());
+                
+                // Check if this exact name exists in database
+                const existsInDB = allExistingNames.includes(name.toLowerCase());
+                
+                // Get all currently entered names (excluding this input)
+                const otherInputs = Array.from(document.querySelectorAll('.player-name-input'))
+                    .filter(i => i !== this);
+                const currentGameNames = otherInputs.map(i => i.value.trim().toLowerCase());
+                
+                // If name exists in DB AND is already used in current game, block it
+                if (existsInDB && currentGameNames.includes(name.toLowerCase())) {
+                    alert(`"${name}" is already selected in this game. Player names must be unique.`);
+                    this.value = '';
+                    this.focus();
+                    return;
+                }
+                
+                // If name doesn't exist in DB and is being typed for first time
+                // Check if it would create a duplicate
+                if (!existsInDB && currentGameNames.includes(name.toLowerCase())) {
+                    alert(`This name is already used in the current game. Each player must have a unique name.`);
+                    this.value = '';
+                    this.focus();
+                    return;
+                }
+                
+                // If name exists in DB but not in current game - that's fine (selecting from suggestions)
+                // If name is new and unique to current game - that's fine too
+            });
+            
+            toggleAddPlayerButton();
         }
 
         function removePlayer(btn) {
@@ -113,6 +201,26 @@
                 return;
             }
             btn.closest('.player-input-group').remove();
+            updatePlayerSuggestions();
+            toggleAddPlayerButton();
+        }
+
+        function updatePlayerSuggestions() {
+            const inputs = document.querySelectorAll('.player-name-input');
+            const enteredNames = Array.from(inputs)
+                .map(input => input.value.trim())
+                .filter(name => name);
+            loadPlayerSuggestions(enteredNames);
+        }
+
+        function toggleAddPlayerButton() {
+            const container = document.getElementById('player-inputs');
+            const addButton = document.querySelector('.btn.btn-secondary');
+            if (container.children.length >= 6) {
+                addButton.style.display = 'none';
+            } else {
+                addButton.style.display = '';
+            }
         }
 
         function movePlayerUp(btn) {
@@ -152,6 +260,10 @@
                 players.push(player.id);
             }
 
+            // Get selected house rules
+            const selectedRules = Array.from(document.querySelectorAll('#house-rules-checkboxes input:checked'))
+                .map(checkbox => JSON.parse(checkbox.value));
+
             // Create new game
             currentGame = new Game();
             currentGame.players = players;
@@ -159,6 +271,7 @@
             players.forEach((id, index) => {
                 currentGame.playerNames[id] = playerNames[index];
             });
+            currentGame.houseRules = selectedRules;
 
             // Save game
             await db.saveGame(currentGame);
