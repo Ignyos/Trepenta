@@ -169,6 +169,7 @@ function showSetup() {
     document.getElementById('setup-view').style.display = 'block';
     document.getElementById('score-view').style.display = 'none';
     document.getElementById('history-view').style.display = 'none';
+    document.getElementById('winner-announcement').style.display = 'none';
     loadPlayerSuggestions();
 }
 
