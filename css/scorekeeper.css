@@ -296,7 +296,6 @@ body {
 .game-config-item {
     font-size: 0.95rem;
     color: var(--text-color);
-    margin-bottom: 0.75rem;
     padding: 0.5rem;
     background: var(--background-light);
     border-radius: 6px;
