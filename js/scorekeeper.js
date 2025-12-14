@@ -375,6 +375,7 @@ function renderScoreGrid() {
     // Add event listeners to score inputs
     document.querySelectorAll('.score-input').forEach(input => {
         input.addEventListener('change', handleScoreChange);
+        input.addEventListener('keydown', handleScoreInputTab);
     });
 
     // Add event listeners to editable player names
@@ -411,6 +412,51 @@ function handleScoreChange(event) {
     
     // Update totals
     renderScoreGrid();
+}
+
+function handleScoreInputTab(event) {
+    if (event.key === 'Tab') {
+        event.preventDefault();
+        
+        const currentInput = event.target;
+        const currentPlayerId = currentInput.dataset.player;
+        const currentRound = parseInt(currentInput.dataset.round);
+        const playerIndex = currentGame.players.indexOf(currentPlayerId);
+        
+        if (event.shiftKey) {
+            // Shift+Tab: Move to previous player in same round (up)
+            if (playerIndex > 0) {
+                const prevPlayerId = currentGame.players[playerIndex - 1];
+                const prevInput = document.querySelector(
+                    `.score-input[data-player="${prevPlayerId}"][data-round="${currentRound}"]`
+                );
+                if (prevInput) prevInput.focus();
+            } else if (currentRound > 1) {
+                // At first player, go to last player of previous round
+                const lastPlayerId = currentGame.players[currentGame.players.length - 1];
+                const prevInput = document.querySelector(
+                    `.score-input[data-player="${lastPlayerId}"][data-round="${currentRound - 1}"]`
+                );
+                if (prevInput) prevInput.focus();
+            }
+        } else {
+            // Tab: Move to next player in same round (down)
+            if (playerIndex < currentGame.players.length - 1) {
+                const nextPlayerId = currentGame.players[playerIndex + 1];
+                const nextInput = document.querySelector(
+                    `.score-input[data-player="${nextPlayerId}"][data-round="${currentRound}"]`
+                );
+                if (nextInput) nextInput.focus();
+            } else if (currentRound < 5) {
+                // At last player, go to first player of next round
+                const firstPlayerId = currentGame.players[0];
+                const nextInput = document.querySelector(
+                    `.score-input[data-player="${firstPlayerId}"][data-round="${currentRound + 1}"]`
+                );
+                if (nextInput) nextInput.focus();
+            }
+        }
+    }
 }
 
 function getInitials(name) {
