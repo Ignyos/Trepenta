@@ -249,9 +249,14 @@ function createGameHistoryCard(gameData) {
     }
     
     let winnerInfo = '';
+    let gameTotal = '';
     if (game.completed) {
         const totals = game.players.map(id => ({ id, total: game.getTotal(id), name: game.playerNames[id] }));
         totals.sort((a, b) => a.total - b.total);
+        
+        // Calculate total score for all players
+        const totalGameScore = totals.reduce((sum, player) => sum + player.total, 0);
+        gameTotal = `<div class="game-total-score">Total Game Score: ${totalGameScore} pts</div>`;
         
         // Check for ties
         const lowestScore = totals[0].total;
@@ -274,6 +279,7 @@ function createGameHistoryCard(gameData) {
         ${deckConfigInfo}
         ${houseRulesBadges}
         ${winnerInfo}
+        ${gameTotal}
         <div class="history-actions">
             <button onclick="viewGame('${game.id}')" class="btn-small">View</button>
             <button onclick="deleteGameConfirm('${game.id}')" class="btn-small btn-danger">Delete</button>
@@ -410,8 +416,27 @@ function handleScoreChange(event) {
     // Save to database
     db.saveGame(currentGame);
     
-    // Update totals
-    renderScoreGrid();
+    // Update only the totals without re-rendering the entire grid
+    updateTotals();
+}
+
+function updateTotals() {
+    // Update total column for each player without re-rendering inputs
+    currentGame.players.forEach(playerId => {
+        const total = currentGame.getTotal(playerId);
+        const totalCell = document.querySelector(`tr:has(.score-input[data-player="${playerId}"]) .total-col strong`);
+        if (totalCell) {
+            totalCell.textContent = total;
+        }
+    });
+    
+    // Update Finish Game button visibility
+    const finishBtn = document.getElementById('finish-game-btn');
+    if (finishBtn && !currentGame.completed && currentGame.isComplete()) {
+        finishBtn.style.display = 'inline-block';
+    } else if (finishBtn && !currentGame.completed) {
+        finishBtn.style.display = 'none';
+    }
 }
 
 function handleScoreInputTab(event) {
