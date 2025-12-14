@@ -90,6 +90,139 @@ body {
     text-align: center;
 }
 
+/* House Rules Accordion */
+.house-rules-accordion {
+    padding: 0;
+    overflow: hidden;
+}
+
+.house-rules-accordion details {
+    cursor: pointer;
+}
+
+.house-rules-accordion summary {
+    padding: 1.5rem 2rem;
+    list-style: none;
+    position: relative;
+    background-color: var(--card-bg);
+    transition: var(--transition);
+}
+
+.house-rules-accordion summary::-webkit-details-marker {
+    display: none;
+}
+
+.house-rules-accordion summary::after {
+    content: '+';
+    position: absolute;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--primary-color);
+    transition: var(--transition);
+}
+
+.house-rules-accordion details[open] summary::after {
+    content: '−';
+}
+
+.house-rules-accordion summary:hover {
+    background-color: var(--background-light);
+}
+
+.house-rules-accordion summary h3 {
+    margin: 0;
+    color: var(--primary-color);
+    padding-right: 3rem;
+}
+
+.house-rules-accordion .house-rules-checkboxes {
+    padding: 1.5rem 2rem 2rem 2rem;
+    border-top: 1px solid var(--border-color);
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* House Rules Checkboxes */
+.house-rules-checkboxes {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+/* Deck Configuration */
+.deck-config {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.deck-option {
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    padding: 0.75rem;
+    transition: all 0.3s;
+}
+
+.deck-option:has(input[type="radio"]:checked) {
+    background-color: var(--background-light);
+    border-color: var(--primary-color);
+}
+
+.deck-radio-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    width: 100%;
+}
+
+.deck-radio-label input[type="radio"] {
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.deck-option-content {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+}
+
+.deck-name {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.deck-count-input {
+    width: 70px;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    text-align: center;
+}
+
+.deck-count-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
 /* House Rules Checkboxes */
 .house-rules-checkboxes {
     display: flex;
@@ -144,6 +277,37 @@ body {
 .score-actions {
     display: flex;
     gap: 0.5rem;
+}
+
+.active-house-rules {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow);
+}
+
+.game-config-item {
+    font-size: 0.95rem;
+    color: var(--text-color);
+    margin-bottom: 0.75rem;
+    padding: 0.5rem;
+    background: var(--background-light);
+    border-radius: 6px;
+}
+
+.game-config-item strong {
+    color: var(--primary-color);
+}
+
+.house-rules-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .score-grid-container {
@@ -274,6 +438,7 @@ body {
     font-size: 0.9rem;
     color: var(--text-secondary);
     margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 .score-legend p {
@@ -355,6 +520,16 @@ body {
 .history-players {
     margin-bottom: 0.75rem;
     font-weight: 500;
+}
+
+.history-deck-config {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+    padding: 0.5rem;
+    background: var(--background-light);
+    border-radius: 6px;
+    border-left: 3px solid var(--primary-color);
 }
 
 .house-rules-tags {

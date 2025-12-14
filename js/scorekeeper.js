@@ -16,6 +16,7 @@ class Game {
         this.currentRound = Object.hasOwn(data, 'currentRound') ? data.currentRound : 1;
         this.completed = Object.hasOwn(data, 'completed') ? data.completed : false;
         this.houseRules = Object.hasOwn(data, 'houseRules') ? data.houseRules : []; // Array of house rule objects
+        this.deckConfig = Object.hasOwn(data, 'deckConfig') ? data.deckConfig : { type: 'standard', count: 1 }; // Deck configuration
         this.createdAt = Object.hasOwn(data, 'createdAt') ? data.createdAt : new Date().toISOString();
     }
 
@@ -230,6 +231,14 @@ function createGameHistoryCard(gameData) {
 
     const playerNames = game.players.map(id => game.playerNames[id]).join(', ');
     
+    let deckConfigInfo = '';
+    if (game.deckConfig) {
+        const deckText = game.deckConfig.type === 'standard' 
+            ? `${game.deckConfig.count} Standard Deck${game.deckConfig.count > 1 ? 's' : ''}`
+            : `Trepenta Deck (${game.deckConfig.count} suits)`;
+        deckConfigInfo = `<div class="history-deck-config">🃏 ${deckText}</div>`;
+    }
+    
     let houseRulesBadges = '';
     if (game.houseRules && game.houseRules.length > 0) {
         houseRulesBadges = '<div class="house-rules-tags">' + 
@@ -243,7 +252,17 @@ function createGameHistoryCard(gameData) {
     if (game.completed) {
         const totals = game.players.map(id => ({ id, total: game.getTotal(id), name: game.playerNames[id] }));
         totals.sort((a, b) => a.total - b.total);
-        winnerInfo = `<div class="winner">🏆 Winner: ${totals[0].name} (${totals[0].total} pts)</div>`;
+        
+        // Check for ties
+        const lowestScore = totals[0].total;
+        const winners = totals.filter(p => p.total === lowestScore);
+        
+        if (winners.length === 1) {
+            winnerInfo = `<div class="winner">🏆 Winner: ${totals[0].name} (${totals[0].total} pts)</div>`;
+        } else {
+            const winnerNames = winners.map(w => w.name).join(' & ');
+            winnerInfo = `<div class="winner">🏆 Tie: ${winnerNames} (${lowestScore} pts)</div>`;
+        }
     }
 
     card.innerHTML = `
@@ -252,6 +271,7 @@ function createGameHistoryCard(gameData) {
             ${game.completed ? '<span class="badge">Completed</span>' : '<span class="badge in-progress">In Progress</span>'}
         </div>
         <div class="history-players">${playerNames}</div>
+        ${deckConfigInfo}
         ${houseRulesBadges}
         ${winnerInfo}
         <div class="history-actions">
@@ -284,6 +304,35 @@ function deleteGameConfirm(gameId) {
 function renderScoreGrid() {
     const grid = document.getElementById('score-grid');
     const totalsDiv = document.getElementById('score-totals');
+    
+    // Display active house rules
+    const houseRulesDiv = document.getElementById('active-house-rules');
+    let houseRulesContent = '';
+    
+    // Add deck configuration
+    if (currentGame.deckConfig) {
+        const deckText = currentGame.deckConfig.type === 'standard' 
+            ? `Standard Deck${currentGame.deckConfig.count > 1 ? 's' : ''}: ${currentGame.deckConfig.count}`
+            : `Trepenta Deck: ${currentGame.deckConfig.count} suits`;
+        houseRulesContent += `<div class="game-config-item"><strong>Deck:</strong> ${deckText}</div>`;
+    }
+    
+    // Add house rules if any
+    if (currentGame.houseRules && currentGame.houseRules.length > 0) {
+        houseRulesContent += '<div class="house-rules-label">House Rules:</div>' +
+            '<div class="house-rules-tags">' +
+            currentGame.houseRules.map(rule => 
+                `<span class="rule-badge" style="background-color: ${rule.color}" title="${rule.brief}">${rule.name}</span>`
+            ).join('') +
+            '</div>';
+    }
+    
+    if (houseRulesContent) {
+        houseRulesDiv.style.display = 'block';
+        houseRulesDiv.innerHTML = houseRulesContent;
+    } else {
+        houseRulesDiv.style.display = 'none';
+    }
     
     let html = '<table class="score-table"><thead><tr>';
     html += '<th>Player</th>';

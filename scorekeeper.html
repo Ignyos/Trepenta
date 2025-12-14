@@ -37,8 +37,17 @@
             </div>
 
             <div class="card">
-                <h3>House Rules <span style="font-weight: normal; font-size: 0.9rem; color: var(--text-secondary);">(Optional)</span></h3>
-                <div id="house-rules-checkboxes" class="house-rules-checkboxes"></div>
+                <h3>Deck Configuration</h3>
+                <div id="deck-config" class="deck-config"></div>
+            </div>
+
+            <div class="card house-rules-accordion">
+                <details>
+                    <summary>
+                        <h3>House Rules <span style="font-weight: normal; font-size: 0.9rem; color: var(--text-secondary);">(Optional)</span></h3>
+                    </summary>
+                    <div id="house-rules-checkboxes" class="house-rules-checkboxes"></div>
+                </details>
             </div>
 
             <div class="setup-actions">
@@ -57,6 +66,8 @@
                 </div>
             </div>
 
+            <div id="active-house-rules" class="active-house-rules" style="display: none;"></div>
+
             <div id="score-grid" class="score-grid-container"></div>
             
             <div id="winner-announcement" class="winner-announcement" style="display: none;"></div>
@@ -65,6 +76,8 @@
                 <p>Each round header shows the dealer's initials. The dealer rotates clockwise each round.</p>
                 <p><strong>Tip:</strong> Click any player name to edit it.</p>
             </div>
+
+            <div id="active-house-rules" class="active-house-rules" style="display: none;"></div>
         </section>
 
         <!-- History View -->
@@ -87,8 +100,54 @@
         addPlayerInput();
         addPlayerInput();
 
+        // Render deck configuration
+        renderDeckConfiguration();
+
         // Render house rules checkboxes
         renderHouseRulesCheckboxes();
+
+        function renderDeckConfiguration() {
+            const container = document.getElementById('deck-config');
+            const playerCount = document.querySelectorAll('.player-name-input').length;
+            const defaultStandardDecks = Math.floor(playerCount / 2) || 1;
+            const defaultTrepentaSuits = 4 + playerCount - 2;
+
+            container.innerHTML = `
+                <div class="deck-option">
+                    <label class="deck-radio-label">
+                        <input type="radio" name="deck-type" value="standard" checked>
+                        <span class="deck-option-content">
+                            <span class="deck-name">Standard Deck(s):</span>
+                            <input type="number" id="standard-deck-count" min="1" max="3" value="${defaultStandardDecks}" class="deck-count-input">
+                        </span>
+                    </label>
+                </div>
+                <div class="deck-option">
+                    <label class="deck-radio-label">
+                        <input type="radio" name="deck-type" value="trepenta">
+                        <span class="deck-option-content">
+                            <span class="deck-name">Trepenta Deck - # of suits:</span>
+                            <input type="number" id="trepenta-suit-count" min="4" max="8" value="${defaultTrepentaSuits}" class="deck-count-input">
+                        </span>
+                    </label>
+                </div>
+            `;
+
+            // Update defaults when player count changes
+            const observer = new MutationObserver(() => {
+                updateDeckDefaults();
+            });
+            observer.observe(document.getElementById('player-inputs'), { childList: true });
+        }
+
+        function updateDeckDefaults() {
+            const playerCount = document.querySelectorAll('.player-name-input').length;
+            const defaultStandardDecks = Math.floor(playerCount / 2) || 1;
+            const defaultTrepentaSuits = 4 + playerCount - 2;
+
+            document.getElementById('standard-deck-count').value = defaultStandardDecks;
+            document.getElementById('trepenta-suit-count').value = defaultTrepentaSuits;
+        }
 
         function renderHouseRulesCheckboxes() {
             const container = document.getElementById('house-rules-checkboxes');
@@ -249,6 +308,11 @@
                 return;
             }
 
+            // Confirm player order
+            if (!confirm('Did you enter the players in the correct order?\n\nDealer first, then clockwise around the table.')) {
+                return;
+            }
+
             // Create player records and save to database
             const players = [];
             for (const name of playerNames) {
@@ -265,6 +329,15 @@
             const selectedRules = Array.from(document.querySelectorAll('#house-rules-checkboxes input:checked'))
                 .map(checkbox => HOUSE_RULES[parseInt(checkbox.value)]);
 
+            // Get deck configuration
+            const deckType = document.querySelector('input[name="deck-type"]:checked').value;
+            const deckConfig = {
+                type: deckType,
+                count: deckType === 'standard' 
+                    ? parseInt(document.getElementById('standard-deck-count').value)
+                    : parseInt(document.getElementById('trepenta-suit-count').value)
+            };
+
             // Create new game
             currentGame = new Game();
             currentGame.players = players;
@@ -273,6 +346,7 @@
                 currentGame.playerNames[id] = playerNames[index];
             });
             currentGame.houseRules = selectedRules;
+            currentGame.deckConfig = deckConfig;
 
             // Save game
             await db.saveGame(currentGame);
