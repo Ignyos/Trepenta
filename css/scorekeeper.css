@@ -12,6 +12,11 @@ body {
     flex: 1;
 }
 
+#history-view .container,
+#history-view {
+    max-width: 100%;
+}
+
 /* Setup View */
 #setup-view {
     max-width: 600px;
@@ -472,9 +477,17 @@ body {
 }
 
 /* History View */
+#history-view {
+    max-width: 100%;
+}
+
+#history-view h2 {
+    text-align: center;
+}
+
 #game-history-list {
     display: grid;
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
 .history-card {
