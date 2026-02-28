@@ -1,9 +1,53 @@
+function normalizeHouseRuleTarget(rawTarget) {
+    const normalized = String(rawTarget || '').replace(/^#/, '').trim();
+    if (!normalized) {
+        return '';
+    }
+    return normalized.startsWith('house-rule-') ? normalized : `house-rule-${normalized}`;
+}
+
+function openHouseRuleFromLocation() {
+    const params = new URLSearchParams(window.location.search);
+    const hashTarget = window.location.hash;
+    const queryTarget = params.get('rule');
+    const targetId = normalizeHouseRuleTarget(hashTarget || queryTarget);
+    if (!targetId) {
+        return;
+    }
+
+    const card = document.getElementById(targetId);
+    if (!card) {
+        return;
+    }
+
+    const details = card.querySelector('details');
+    if (details) {
+        details.open = true;
+    }
+
+    card.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+    });
+}
+
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const href = this.getAttribute('href');
+        const target = document.querySelector(href);
         if (target) {
+            e.preventDefault();
+
+            const targetId = normalizeHouseRuleTarget(href);
+            if (targetId) {
+                const card = document.getElementById(targetId);
+                const details = card?.querySelector('details');
+                if (details) {
+                    details.open = true;
+                }
+            }
+
             target.scrollIntoView({
                 behavior: 'smooth',
                 block: 'start'
@@ -57,4 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
         card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
         observer.observe(card);
     });
+
+    setTimeout(openHouseRuleFromLocation, 0);
 });
+
+window.addEventListener('hashchange', openHouseRuleFromLocation);
