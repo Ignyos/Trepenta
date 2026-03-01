@@ -241,6 +241,7 @@ body {
     overflow: hidden;
     transition: var(--transition);
     border: 1px solid var(--border-color);
+    scroll-margin-top: 7rem;
 }
 
 .house-rule-card:hover {

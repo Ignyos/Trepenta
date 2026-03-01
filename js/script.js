@@ -58,3 +58,35 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(card);
     });
 });
+
+const revealLinkedHouseRule = () => {
+    if (!window.location.hash) {
+        return;
+    }
+
+    const target = document.querySelector(window.location.hash);
+    if (!target) {
+        return;
+    }
+
+    const houseRuleCard = target.classList.contains('house-rule-card')
+        ? target
+        : target.closest('.house-rule-card');
+
+    if (!houseRuleCard) {
+        return;
+    }
+
+    const details = houseRuleCard.querySelector('details');
+    if (details) {
+        details.open = true;
+    }
+
+    houseRuleCard.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+    });
+};
+
+window.addEventListener('hashchange', revealLinkedHouseRule);
+document.addEventListener('DOMContentLoaded', revealLinkedHouseRule);
